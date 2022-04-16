@@ -7,7 +7,8 @@ using namespace std;
 #include"HuffmanProject.h"
 
 const int MAX = 256;
-    
+// Defining function to print trees
+
 void huffman::alt_printTree(nodeType* p, int level) {
         if (p) {
             cout << p->ch << '\t' << p->weight << "\t" << level << endl;
