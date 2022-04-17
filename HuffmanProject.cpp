@@ -1,42 +1,22 @@
 /*
 Code by Karan Budhathoki, Leslie Delval, Prem Adhikari
 */
-
-
-
-
 #include <iostream>
 using namespace std;
 #include <fstream>
+#include"HuffmanProject.h"
 
 const int MAX = 256;
-class huffman {
-private:
-    struct nodeType {
-        char ch;
-        int weight;
-        struct nodeType* next;
-        nodeType* one, * zero;
+// Defining function to print trees
 
-        nodeType() {
-            ch = char(2);
-            weight = 0;
-            next = NULL;
-            zero = NULL;
-            one = NULL;
-        }
-    };
-    nodeType* root;
-    nodeType** arr;
-
-    void alt_printTree(nodeType* p, int level) {
+void huffman::alt_printTree(nodeType* p, int level) {
         if (p) {
             cout << p->ch << '\t' << p->weight << "\t" << level << endl;
             alt_printTree(p->zero, level + 1);
             alt_printTree(p->one, level + 1);
         }
     }
-    void put(nodeType* p) {
+    void huffman:: put(nodeType* p) {
         nodeType** dp;
         dp = &root;
         while (*dp && (*dp)->weight <= p->weight) {
@@ -45,7 +25,7 @@ private:
         p->next = *dp;
         *dp = p;
     }
-    bool isThere(nodeType* p, char myCh) {
+    bool huffman::isThere(nodeType* p, char myCh) {
         if (!p) {
             return false;
         }
@@ -58,15 +38,16 @@ private:
             }
         }
     }
-public:
-    huffman() {
+
+
+    huffman::huffman() {
         root = NULL;
         arr = new nodeType * [MAX];
         for (int i = 0; i < MAX; i++) {
             arr[i] = NULL;
         }
     }
-    void createArray() {
+    void huffman::createArray() {
         ifstream ifile;
         ifile.open("input.txt");
 
@@ -88,7 +69,7 @@ public:
         ifile.close();
         cout.put('\n');
     }
-    void printArray() {
+    void huffman::printArray() {
         cout << "\nPrinting the array:\n";
         for (int i = 0; i < MAX; i++) {
             if (arr[i]) {
@@ -96,14 +77,14 @@ public:
             }
         }
     }
-    void createLinkedList() {
+    void huffman::createLinkedList() {
         for (int i = 0; i < MAX; i++) {
             if (arr[i]) {
                 put(arr[i]);
             }
         }
     }
-    void printLinkedList() {
+    void huffman::printLinkedList() {
         nodeType* p;
         p = root;
         cout << "\nPrinting the linked list:" << endl;
@@ -112,7 +93,7 @@ public:
             p = p->next;
         }
     }
-    void createTree() {
+    void huffman::createTree() {
         nodeType* p;
         while (root->next) {
             p = new nodeType;
@@ -124,12 +105,12 @@ public:
 
         }
     }
-    void printTree() {
+    void huffman::printTree() {
         cout << "\nPrinting the Tree:" << endl;
         alt_printTree(root, 0);
     }
 
-    void encode(char ch) {
+    void huffman::encode(char ch) {
         nodeType* p = root;
         while (p->zero) {
             if (isThere(p->zero, ch)) {
@@ -143,7 +124,7 @@ public:
         }
         cout << "\nFinished" << endl;
     }
-    char decode(char* d) {
+    char huffman::decode(char* d) {
         int i = 0;
         char num;
         nodeType* p = root;
@@ -160,44 +141,4 @@ public:
         cout.put('\t');
         return p->ch;
     }
-};
 
-int main() {
-    
-    huffman myhuff;
-    myhuff.createArray();
-    myhuff.printArray();
-    cout<<"------------------------------"<<endl;
-    myhuff.createLinkedList();
-    myhuff.printLinkedList();
-    cout<<"------------------------------"<<endl;
-    myhuff.createTree();
-    myhuff.printTree();
-    cout<<"------------------------------"<<endl;
-
-    char input;
-    bool check = true;
-    
-    while (check) {
-        cout << "\nEnter character to encode or enter n for exit: ";
-        cin >> input;
-        if (input == 'n') {
-            check = false;
-            break;
-        }
-        cout << "\n\n";
-        myhuff.encode(input);
-    }
-    char* s;
-    s = new char[8];
-    while (true) {
-        cin.ignore(255, '\n');
-        cout << "Enter a string to decode or press enter to exit: ";
-        cin.getline(s, 8);
-        if (!s[0]) {
-            break;
-        }
-        cout << myhuff.decode(s) << "\n\n";
-    }
-    return 0;
-}
