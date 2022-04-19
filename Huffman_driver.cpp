@@ -1,3 +1,6 @@
+/*
+Code by Karan Budhathoki, Leslie Delval, Prem Adhikari
+*/
 #include <iostream>
 using namespace std;
 #include <fstream>
@@ -5,22 +8,23 @@ using namespace std;
 
 int main() {
     
-    huffman myhuff;
-    myhuff.createArray();
-    myhuff.printArray();
+    huffman myhuff;// variable of type class
+    myhuff.createArray();//creating array
+    myhuff.printArray();// printing the arrays
     cout<<"------------------------------"<<endl;
-    myhuff.createLinkedList();
-    myhuff.printLinkedList();
+    myhuff.createLinkedList();// creating linked list
+    myhuff.printLinkedList();// printing the linked
     cout<<"------------------------------"<<endl;
-    myhuff.createTree();
-    myhuff.printTree();
+    myhuff.createTree();// creating the tree
+    myhuff.printTree();// printing the tree
+
     cout<<"------------------------------"<<endl;
 
     char input;
     bool check = true;
     
     while (check) {
-        cout << "\nEnter character to encode or enter n for exit: ";
+        cout << "\nEnter character to encode or enter n for exit: ";// prompting the user to encode
         cin >> input;
         if (input == 'n') {
             check = false;
@@ -33,12 +37,12 @@ int main() {
     s = new char[8];
     while (true) {
         cin.ignore(255, '\n');
-        cout << "Enter a string to decode or press enter to exit: ";
+        cout << "Enter a string to decode or press enter to exit: ";// prompting the user to decode.
         cin.getline(s, 8);
         if (!s[0]) {
             break;
         }
-        cout << myhuff.decode(s) << "\n\n";
+        cout << myhuff.decode(s) << "\n\n";// printinng the decode.
     }
     return 0;
 }
